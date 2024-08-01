@@ -1,18 +1,35 @@
 #include <Arduino.h>
 
-// put function declarations here:
-int myFunction(int, int);
+
+// Example 1 - Receiving single characters
+
+int receivedChar;
+boolean newData = false;
+
+void recvOneChar();
+void showNewData();
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(9600);
+  Serial.println("<Arduino is ready>");
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  recvOneChar();
+  showNewData();
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+void recvOneChar() {
+  if (Serial.available() > 0) {
+    receivedChar = Serial.read();
+    newData = true;
+  }
+}
+
+void showNewData() {
+  if (newData == true) {
+    Serial.print("This just in ... ");
+    Serial.println(receivedChar);
+    newData = false;
+  }
 }
