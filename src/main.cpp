@@ -12,6 +12,9 @@ void showNewData();
 void runCommand();
 void writeDigital(int pin, int value);
 void readDigital(int pin, int value);
+void modePin(int pin, int value);
+void readAnalog(int pin, int value);
+void writeAnalog(int pin, int value);
 
 // Command structure
 struct {
@@ -24,12 +27,17 @@ struct {
 functionsArray functions[] = 
   {
       writeDigital, 
-      readDigital
+      readDigital,
+      modePin,
+      readAnalog,
+      writeAnalog
   };
 
 // Setup, starts serial
 void setup() {
   Serial.begin(9600);
+  analogReadResolution(8);  // Sets up analog read for 8 bit
+  analogWriteResolution(8); // Sets up analog write for 8 bit
   Serial.println("<Arduino is ready>");
 }
 
@@ -83,3 +91,14 @@ void readDigital(int pin, int value) {
   Serial.println(digitalRead(pin));
 }
 
+void modePin(int pin, int value) {
+  pinMode(pin, value);
+}
+
+void readAnalog(int pin, int value) {
+  Serial.println(analogRead(pin));
+}
+
+void writeAnalog(int pin, int value) {
+  analogWrite(pin, value);
+}
